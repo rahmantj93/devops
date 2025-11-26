@@ -1,0 +1,43 @@
+name: Feature request
+description: Suggest an enhancement or new report
+title: "[feat]: <short summary>"
+labels:
+  - enhancement
+assignees:
+  - rahmantj93
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem statement
+      description: What problem are you trying to solve?
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed solution
+      description: Describe the feature, including inputs/outputs and acceptance criteria
+    validations:
+      required: true
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives considered
+  - type: dropdown
+    id: component
+    attributes:
+      label: Component
+      options:
+        - Reports - Countries
+        - Reports - Cities
+        - Reports - Capital Cities
+        - Reports - Population Breakdown
+        - Reports - Totals
+        - Reports - Languages
+        - Docs
+        - Other
+  - type: textarea
+    id: extra
+    attributes:
+      label: Additional context

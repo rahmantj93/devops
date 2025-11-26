@@ -1,0 +1,85 @@
+# Standard labels
+- name: bug
+  color: d73a4a
+  description: Something isn't working
+- name: enhancement
+  color: a2eeef
+  description: New feature or request
+- name: triage
+  color: fef2c0
+  description: Needs initial review/triage
+- name: good first issue
+  color: 7057ff
+  description: Good for newcomers
+- name: help wanted
+  color: 008672
+  description: Extra attention is needed
+
+# Priority / severity (mapped from form)
+- name: priority/S1-critical
+  color: b60205
+  description: Critical impact (broken builds, wrong totals, data loss)
+- name: priority/S2-major
+  color: d93f0b
+  description: Major impact (incorrect results; critical path degraded)
+- name: priority/S3-normal
+  color: fbca04
+  description: Normal impact (workaround exists)
+- name: priority/S4-low
+  color: c5def5
+  description: Low impact (minor or cosmetic)
+
+# Status workflow
+- name: status/needs-repro
+  color: e4e669
+  description: Needs reliable reproduction
+- name: status/confirmed
+  color: 0e8a16
+  description: Reproduced and accepted as a bug
+- name: status/in-progress
+  color: 0052cc
+  description: Being worked on
+- name: status/blocked
+  color: bfd4f2
+  description: Blocked by another issue or dependency
+
+# Components (mapped from form)
+- name: component/reports-countries
+  color: 1f77b4
+  description: Countries reports
+- name: component/reports-cities
+  color: ff7f0e
+  description: Cities reports
+- name: component/reports-capital-cities
+  color: 2ca02c
+  description: Capital cities reports
+- name: component/reports-population
+  color: 9467bd
+  description: Population breakdown reports
+- name: component/reports-totals
+  color: 17becf
+  description: Totals (world/continent/region/country/district/city)
+- name: component/reports-languages
+  color: e377c2
+  description: Languages totals and % of world
+- name: component/data-import
+  color: 7f7f7f
+  description: Data import / seed
+- name: component/database-sql
+  color: bcbd22
+  description: Database / SQL layer
+- name: component/api
+  color: 8c564b
+  description: API / Service layer
+- name: component/cli
+  color: 17a2b8
+  description: CLI tooling
+- name: component/web-ui
+  color: 0366d6
+  description: Web UI / frontend
+- name: component/docs
+  color: d4c5f9
+  description: Documentation
+- name: component/other
+  color: cccccc
+  description: Other / miscellaneous

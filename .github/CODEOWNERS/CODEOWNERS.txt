@@ -1,0 +1,8 @@
+1# Default owner for the repository
+2* @rahmantj93
+3
+4# Add more granular ownership as your repo grows (examples):
+5# sql/**        @rahmantj93
+6# api/**        @rahmantj93
+7# web/**        @rahmantj93
+8# .github/**    @rahmantj93

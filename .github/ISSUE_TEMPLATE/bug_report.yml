@@ -1,0 +1,193 @@
+name: Bug report
+description: File a bug report for the population reporting system
+title: "[bug]: <short summary>"
+labels:
+  - bug
+  - triage
+assignees:
+  - rahmantj93
+body:
+  - type: checkboxes
+    id: preflight
+    attributes:
+      label: Pre-flight checklist
+      description: Please confirm the following before filing
+      options:
+        - label: I have searched existing issues to avoid duplicates
+          required: true
+        - label: I have read the docs/README and relevant usage guides
+          required: true
+        - label: I can provide steps to reproduce or a minimal dataset/query
+          required: true
+
+  - type: textarea
+    id: summary
+    attributes:
+      label: Summary
+      description: What happened? A clear and concise description of the issue.
+      placeholder: e.g., Region report returns incorrect totals for Asia
+    validations:
+      required: true
+
+  - type: dropdown
+    id: severity
+    attributes:
+      label: Severity
+      description: How much impact does this have?
+      options:
+        - S1 - Critical (broken builds / wrong totals / data loss)
+        - S2 - Major (incorrect query results; critical path degraded)
+        - S3 - Normal (bug with reasonable workaround)
+        - S4 - Low (minor issue; cosmetic)
+    validations:
+      required: true
+
+  - type: dropdown
+    id: component
+    attributes:
+      label: Component
+      description: Which part is affected?
+      options:
+        - Reports - Countries
+        - Reports - Cities
+        - Reports - Capital Cities
+        - Reports - Population Breakdown
+        - Reports - Totals
+        - Reports - Languages
+        - Data Import / Seed
+        - Database / SQL
+        - API / Service
+        - CLI
+        - Web UI
+        - Docs
+        - Other
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: affected_reports
+    attributes:
+      label: Affected report(s)
+      description: Select all that apply
+      options:
+        # Countries
+        - label: Countries - All countries in the world by population (desc)
+        - label: Countries - All countries in a continent by population (desc)
+        - label: Countries - All countries in a region by population (desc)
+        - label: Countries - Top N in the world
+        - label: Countries - Top N in a continent
+        - label: Countries - Top N in a region
+        # Cities
+        - label: Cities - All cities in the world by population (desc)
+        - label: Cities - All cities in a continent by population (desc)
+        - label: Cities - All cities in a region by population (desc)
+        - label: Cities - All cities in a country by population (desc)
+        - label: Cities - All cities in a district by population (desc)
+        - label: Cities - Top N in the world
+        - label: Cities - Top N in a continent
+        - label: Cities - Top N in a region
+        - label: Cities - Top N in a country
+        - label: Cities - Top N in a district
+        # Capital Cities
+        - label: Capital Cities - All in the world by population (desc)
+        - label: Capital Cities - All in a continent by population (desc)
+        - label: Capital Cities - All in a region by population (desc)
+        - label: Capital Cities - Top N in the world
+        - label: Capital Cities - Top N in a continent
+        - label: Capital Cities - Top N in a region
+        # Population breakdowns
+        - label: Population - People, in cities, not in cities (by continent)
+        - label: Population - People, in cities, not in cities (by region)
+        - label: Population - People, in cities, not in cities (by country)
+        # Totals
+        - label: Totals - World population
+        - label: Totals - Continent population
+        - label: Totals - Region population
+        - label: Totals - Country population
+        - label: Totals - District population
+        - label: Totals - City population
+        # Languages
+        - label: Languages - Chinese, English, Hindi, Spanish, Arabic totals and % of world
+
+  - type: textarea
+    id: repro
+    attributes:
+      label: Steps to reproduce
+      description: Provide step-by-step instructions. Include exact inputs (e.g., continent=Asia, N=10), sample SQL, and any filters.
+      placeholder: |
+        1. Run report: "Countries - Top N in a continent" with continent=Asia and N=10
+        2. Observe output ranks and totals
+        3. Compare with expected values
+      render: bash
+    validations:
+      required: true
+
+  - type: input
+    id: expected
+    attributes:
+      label: Expected result
+      placeholder: e.g., Sum of top 10 Asian countries equals X; order matches population desc
+    validations:
+      required: true
+
+  - type: input
+    id: actual
+    attributes:
+      label: Actual result
+      placeholder: e.g., Order differs; totals off by 1.2%
+    validations:
+      required: true
+
+  - type: textarea
+    id: env
+    attributes:
+      label: Environment
+      description: Include versions and platform details
+      value: |
+        App version/commit: vX.Y.Z / <commit-sha>
+        Database vendor & version: e.g., MySQL 8.0.36 / PostgreSQL 16
+        Dataset: <name or link> (e.g., world.sql)
+        OS/Arch: e.g., Ubuntu 22.04 x86_64
+        Runtime/Stack: e.g., Java 21 / Node 20 / .NET 8 / Python 3.12
+        Container: Docker? (yes/no) Image tag:
+        Deployment: local / CI / prod
+    validations:
+      required: true
+
+  - type: textarea
+    id: logs
+    attributes:
+      label: Logs, SQL, or stack traces
+      description: Paste relevant logs or queries (mask secrets). Use code fences for readability.
+      render: sql
+
+  - type: textarea
+    id: screenshots
+    attributes:
+      label: Screenshots
+      description: Drag/drop images or link dashboards where relevant
+
+  - type: dropdown
+    id: reproducibility
+    attributes:
+      label: Reproducibility
+      options:
+        - Always
+        - Often
+        - Sometimes
+        - Rarely
+        - Unable to reproduce
+
+  - type: textarea
+    id: extra
+    attributes:
+      label: Additional context
+      description: Any other context, links to related issues, or suspected root cause
+
+  - type: checkboxes
+    id: code_of_conduct
+    attributes:
+      label: Agreements
+      options:
+        - label: I agree to follow the project's Code of Conduct and will not include confidential data
+          required: true

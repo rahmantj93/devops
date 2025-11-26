@@ -1,0 +1,90 @@
+name: Issue triage
+
+on:
+  issues:
+    types: [opened, edited, reopened]
+
+permissions:
+  issues: write
+  contents: read
+
+jobs:
+  label-from-form:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Apply labels and assign based on Issue Form selections
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const issue = context.payload.issue;
+            if (!issue) return;
+
+            const body = issue.body || "";
+
+            async function addLabels(labels) {
+              const unique = [...new Set(labels.filter(Boolean))];
+              if (!unique.length) return;
+              await github.rest.issues.addLabels({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: issue.number,
+                labels: unique
+              });
+            }
+
+            // Extract selection text following "### <Heading>"
+            function extractSection(heading) {
+              const re = new RegExp(`###\\s+${heading}\\s*\\n([\\s\\S]*?)\\n###\\s+|###\\s+${heading}\\s*\\n([\\s\\S]*)`, 'i');
+              const match = body.match(re);
+              const value = match ? (match[1] || match[2] || '').trim() : '';
+              return value.split('\n')[0].trim();
+            }
+
+            // Map severity -> priority labels
+            const severity = extractSection('Severity');
+            let priorityLabel = null;
+            if (/S1\s*-\s*Critical/i.test(severity)) priorityLabel = 'priority/S1-critical';
+            else if (/S2\s*-\s*Major/i.test(severity)) priorityLabel = 'priority/S2-major';
+            else if (/S3\s*-\s*Normal/i.test(severity)) priorityLabel = 'priority/S3-normal';
+            else if (/S4\s*-\s*Low/i.test(severity)) priorityLabel = 'priority/S4-low';
+
+            // Map component -> component labels
+            const component = extractSection('Component');
+            const mapComponent = new Map([
+              [/Reports\s*-\s*Countries/i, 'component/reports-countries'],
+              [/Reports\s*-\s*Cities/i, 'component/reports-cities'],
+              [/Reports\s*-\s*Capital Cities/i, 'component/reports-capital-cities'],
+              [/Reports\s*-\s*Population Breakdown/i, 'component/reports-population'],
+              [/Reports\s*-\s*Totals/i, 'component/reports-totals'],
+              [/Reports\s*-\s*Languages/i, 'component/reports-languages'],
+              [/Data Import/i, 'component/data-import'],
+              [/Database\s*\/\s*SQL/i, 'component/database-sql'],
+              [/API\s*\/\s*Service/i, 'component/api'],
+              [/CLI/i, 'component/cli'],
+              [/Web UI/i, 'component/web-ui'],
+              [/Docs/i, 'component/docs'],
+              [/Other/i, 'component/other'],
+            ]);
+            let componentLabel = null;
+            for (const [re, lbl] of mapComponent.entries()) {
+              if (re.test(component)) { componentLabel = lbl; break; }
+            }
+
+            // Reproducibility -> status/needs-repro for "Unable to reproduce"
+            const reproducibility = extractSection('Reproducibility');
+            let statusLabel = null;
+            if (/Unable to reproduce/i.test(reproducibility)) {
+              statusLabel = 'status/needs-repro';
+            }
+
+            await addLabels([priorityLabel, componentLabel, statusLabel]);
+
+            // Auto-assign to repo owner if no assignee is set
+            if (!issue.assignees || issue.assignees.length === 0) {
+              await github.rest.issues.addAssignees({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: issue.number,
+                assignees: ['rahmantj93']
+              });
+            }

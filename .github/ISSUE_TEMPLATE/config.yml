@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Security issue
+    url: https://github.com/rahmantj93/devops/security/policy
+    about: Please report security vulnerabilities here. Do not open a public issue.
+  - name: Questions & support
+    url: https://github.com/rahmantj93/devops/discussions
+    about: Use Discussions for Q&A and general support.
